@@ -136,7 +136,7 @@
       <if expr="not is_android and not is_ios">
         <message name="IDS_ERRORPAGES_SUGGESTION_NETWORK_PREDICTION_BODY" desc="When a page fails to load, sometimes we suggest disabling predicting network actions.  These are details below a header for non Android devices.">
           Go to
-          the Chromium menu &gt;
+          the Chronos menu &gt;
           <ph name="SETTINGS_TITLE">&lt;span jscontent="settingsTitle"&gt;&lt;/span&gt;<ex>Settings</ex></ph>
           &gt;
           <ph name="ADVANCED_TITLE">&lt;span jscontent="advancedTitle"&gt;&lt;/span&gt;<ex>Under the Hood</ex></ph>
@@ -145,7 +145,7 @@
           again for improved performance.
         </message>
         <message name="IDS_ERRORPAGES_SUGGESTION_FIREWALL_CONFIG_HEADER" desc="When a webpage fails to load, in some cases we suggest reconfiguring the firewall.  This is a header above some details.">
-          Allow Chromium to access the network in your firewall or antivirus
+          Allow Chronos to access the network in your firewall or antivirus
           settings.
         </message>
       </if>
@@ -162,7 +162,7 @@
       <if expr="not chromeos and is_posix and not is_macosx and not is_android and not is_ios">
         <message name="IDS_ERRORPAGES_SUGGESTION_PROXY_DISABLE_PLATFORM" desc="Linux instructions for disabling use of a proxy server.">
           Go to
-          the Chromium menu &gt;
+          the Chronos menu &gt;
           <ph name="SETTINGS_TITLE">&lt;span jscontent="settingsTitle"&gt;&lt;/span&gt;<ex>Settings</ex></ph>
           &gt;
           <ph name="ADVANCED_TITLE">&lt;span jscontent="advancedTitle"&gt;&lt;/span&gt;<ex>Under the Hood</ex></ph>
@@ -174,7 +174,7 @@
       <if expr="is_win">
         <message name="IDS_ERRORPAGES_SUGGESTION_PROXY_DISABLE_PLATFORM" desc="Windows instructions for disabling use of a proxy server.">
           Go to
-          the Chromium menu &gt;
+          the Chronos menu &gt;
           <ph name="SETTINGS_TITLE">&lt;span jscontent="settingsTitle"&gt;&lt;/span&gt;<ex>Settings</ex></ph>
           &gt;
           <ph name="ADVANCED_TITLE">&lt;span jscontent="advancedTitle"&gt;&lt;/span&gt;<ex>Under the Hood</ex></ph>
@@ -188,8 +188,8 @@
 
       <!-- About Flags UI -->
       <if expr="not chromeos">
-        <message name="IDS_FLAGS_UI_RELAUNCH_NOTICE" desc="Notifies the user that they need to relaunch Chromium. Shown next to a button that says 'Relaunch Now'.">
-          Your changes will take effect the next time you relaunch Chromium.
+        <message name="IDS_FLAGS_UI_RELAUNCH_NOTICE" desc="Notifies the user that they need to relaunch Chronos. Shown next to a button that says 'Relaunch Now'.">
+          Your changes will take effect the next time you relaunch Chronos.
         </message>
       </if>
       <if expr="chromeos">
@@ -200,26 +200,26 @@
 
       <!-- chrome://crashes strings -->
       <message name="IDS_CRASH_DISABLED_MESSAGE" desc="The explanatory message for chrome://crashes when crash reporting is disabled">
-        Crash reporting is not available in Chromium.
+        Crash reporting is not available in Chronos.
       </message>
 
       <!-- Version UI -->
       <message name="IDS_VERSION_UI_LICENSE" desc="The label below the copyright message, containing the URLs.">
-        Chromium is made possible by the <ph name="BEGIN_LINK_CHROMIUM">&lt;a target="_blank" href="$1"&gt;</ph>Chromium<ph name="END_LINK_CHROMIUM">&lt;/a&gt;</ph> open source project and other <ph name="BEGIN_LINK_OSS">&lt;a target="_blank" href="$2"&gt;</ph>open source software<ph name="END_LINK_OSS">&lt;/a&gt;</ph>.
+        Chronos is made possible by the <ph name="BEGIN_LINK_CHROMIUM">&lt;a target="_blank" href="$1"&gt;</ph>Chromium<ph name="END_LINK_CHROMIUM">&lt;/a&gt;</ph> open source project and other <ph name="BEGIN_LINK_OSS">&lt;a target="_blank" href="$2"&gt;</ph>open source software<ph name="END_LINK_OSS">&lt;/a&gt;</ph>.
       </message>
 
       <!-- Page Info bubble -->
       <message name="IDS_PAGE_INFO_INTERNAL_PAGE" desc="Message to display in the page info bubble when the page you are on is a chrome:// page or about:something.">
-        You are viewing a secure Chromium page.
+        You are viewing a secure Chronos page.
       </message>
 
       <message name="IDS_SESSION_CRASHED_VIEW_MESSAGE" desc="Message shown when the last session didn't exit cleanly.">
-        Chromium didn't shut down correctly.
+        Chronos didn't shut down correctly.
       </message>
 
-      <!-- Strings describing Chromium security policy for DevTools security panel -->
-      <message name="IDS_PRIVATE_USER_DATA_INPUT_FUTURE_DESCRIPTION" desc="Description of a security problem where the site collects private user data on an insecure page, which will result in an omnibox warning in future versions of Chromium." translateable="false">
-        This page includes a password or credit card input over HTTP. A warning will be added to the URL bar starting in Chromium 56 (Jan 2017).
+      <!-- Strings describing Chronos security policy for DevTools security panel -->
+      <message name="IDS_PRIVATE_USER_DATA_INPUT_FUTURE_DESCRIPTION" desc="Description of a security problem where the site collects private user data on an insecure page, which will result in an omnibox warning in future versions of Chronos." translateable="false">
+        This page includes a password or credit card input over HTTP. A warning will be added to the URL bar starting in Chronos 56 (Jan 2017).
       </message>
       <message name="IDS_PRIVATE_USER_DATA_INPUT_DESCRIPTION" desc="Description of a security problem where the site collects private user data on an insecure page, which results in an omnibox warning." translateable="false">
         This page includes a password or credit card input over HTTP. A warning has been added to the URL bar.
