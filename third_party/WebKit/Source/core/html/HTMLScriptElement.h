@@ -52,6 +52,11 @@ class CORE_EXPORT HTMLScriptElement final : public HTMLElement,
 
   ScriptLoader* loader() const { return m_loader.get(); }
 
+  // Chronos
+  bool isScriptBlocked() const { return m_blocked; }
+  void setScriptBlocked(bool blocked);
+  // End chronos
+
   DECLARE_VIRTUAL_TRACE();
 
  private:
@@ -87,6 +92,9 @@ class CORE_EXPORT HTMLScriptElement final : public HTMLElement,
   Element* cloneElementWithoutAttributesAndChildren() override;
 
   Member<ScriptLoader> m_loader;
+  // Chronos
+  bool m_blocked;
+  // End chronos
 };
 
 }  // namespace blink

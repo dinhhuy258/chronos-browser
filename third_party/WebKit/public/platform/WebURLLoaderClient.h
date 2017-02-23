@@ -96,6 +96,15 @@ class BLINK_PLATFORM_EXPORT WebURLLoaderClient {
                               int encodedDataLength,
                               int encodedBodyLength) {}
 
+  // Chronos
+  virtual void didReceiveData(WebURLLoader*,
+                              const char* data,
+                              int dataLength,
+                              int encodedDataLength,
+                              int encodedBodyLength,
+                              bool blocked) {}
+  // End chronos
+
   // Called when a chunk of renderer-generated metadata is received from the
   // cache.
   virtual void didReceiveCachedMetadata(WebURLLoader*,

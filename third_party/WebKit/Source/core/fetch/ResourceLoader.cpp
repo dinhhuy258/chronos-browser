@@ -217,12 +217,18 @@ void ResourceLoader::didReceiveData(WebURLLoader*,
                                     const char* data,
                                     int length,
                                     int encodedDataLength,
-                                    int encodedBodyLength) {
+                                    int encodedBodyLength,
+                                    // Chronos
+                                    bool blocked) {
+                                    // End chronos
   CHECK_GE(length, 0);
   m_fetcher->didReceiveData(m_resource.get(), data, length, encodedDataLength);
   m_resource->addToEncodedBodyLength(encodedBodyLength);
   m_resource->addToDecodedBodyLength(length);
   m_resource->appendData(data, length);
+  // Chronos
+  m_resource->setResourceBlocked(blocked);
+  // End chronos
 }
 
 void ResourceLoader::didFinishLoadingFirstPartInMultipart() {

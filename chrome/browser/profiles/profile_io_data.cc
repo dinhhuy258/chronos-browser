@@ -477,6 +477,10 @@ void ProfileIOData::InitializeOnUIThread(Profile* profile) {
   profile_params_ = std::move(params);
 
   ChromeNetworkDelegate::InitializePrefsOnUIThread(
+      // Chronos
+      &enable_ad_block_,
+      &enable_smart_ad_block_,
+      // End chronos
       &enable_referrers_,
       &enable_do_not_track_,
       &force_google_safesearch_,
@@ -1043,6 +1047,10 @@ void ProfileIOData::Init(
   }
 #endif
 
+  // Chronos
+  network_delegate->set_enable_ad_block(&enable_ad_block_);
+  network_delegate->set_enable_smart_ad_block(&enable_smart_ad_block_);
+  // End chronos
   network_delegate->set_url_blacklist_manager(url_blacklist_manager_.get());
   network_delegate->set_profile(profile_params_->profile);
   network_delegate->set_profile_path(profile_params_->path);
@@ -1262,6 +1270,10 @@ void ProfileIOData::ShutdownOnUIThread(
     std::unique_ptr<ChromeURLRequestContextGetterVector> context_getters) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
+  // Chronos
+  enable_ad_block_.Destroy();
+  enable_smart_ad_block_.Destroy();
+  // End chronos
   google_services_user_account_id_.Destroy();
   enable_referrers_.Destroy();
   enable_do_not_track_.Destroy();

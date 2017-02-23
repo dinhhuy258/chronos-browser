@@ -859,6 +859,10 @@ extern const char kSearchGeolocationDisclosureLastShowDate[];
 extern const char kSearchGeolocationPreDisclosureMetricsRecorded[];
 extern const char kSearchGeolocationPostDisclosureMetricsRecorded[];
 #endif
+// Chronos
+extern const char kEnableAdBlock[];
+extern const char kEnableSmartAdBlock[];
+// End chronos
 
 }  // namespace prefs
 

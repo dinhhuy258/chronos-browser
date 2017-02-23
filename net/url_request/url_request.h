@@ -655,6 +655,10 @@ class NET_EXPORT URLRequest : NON_EXPORTED_BASE(public base::NonThreadSafe),
   // Returns the error status of the request.
   // Do not use! Going to be protected!
   const URLRequestStatus& status() const { return status_; }
+  // Chronos
+  void set_request_blocked(bool blocked);
+  bool is_request_blocked() const { return blocked_; }
+  // End chronos
  protected:
   // Allow the URLRequestJob class to control the is_pending() flag.
   void set_is_pending(bool value) { is_pending_ = value; }
@@ -856,6 +860,10 @@ class NET_EXPORT URLRequest : NON_EXPORTED_BASE(public base::NonThreadSafe),
 
   // The raw header size of the response.
   int raw_header_size_;
+
+  // Chronos
+  bool blocked_;
+  // End chronos
 
   DISALLOW_COPY_AND_ASSIGN(URLRequest);
 };

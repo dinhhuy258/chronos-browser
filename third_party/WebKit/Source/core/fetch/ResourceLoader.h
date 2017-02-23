@@ -107,7 +107,10 @@ class CORE_EXPORT ResourceLoader final
                       const char*,
                       int,
                       int encodedDataLength,
-                      int encodedBodyLength) override;
+                      int encodedBodyLength,
+                      // Chronos
+                      bool blocked = false) override;
+                      // End chronos
   void didDownloadData(WebURLLoader*, int, int) override;
   void didFinishLoading(WebURLLoader*,
                         double finishTime,

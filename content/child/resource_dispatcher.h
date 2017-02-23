@@ -221,7 +221,10 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
                       int data_offset,
                       int data_length,
                       int encoded_data_length,
-                      int encoded_body_length);
+                      int encoded_body_length,
+                      // Chronos
+                      bool blocked = false);
+                      // End chronos
   void OnDownloadedData(int request_id, int data_len, int encoded_data_length);
   void OnRequestComplete(
       int request_id,

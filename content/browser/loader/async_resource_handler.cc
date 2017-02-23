@@ -454,9 +454,15 @@ bool AsyncResourceHandler::OnReadCompleted(int bytes_read, bool* defer) {
 
   int data_offset = buffer_->GetLastAllocationOffset();
 
+  // Chronos
+  bool blocked = request()->is_request_blocked();
+  // End chronos
   filter->Send(new ResourceMsg_DataReceived(GetRequestID(), data_offset,
                                             bytes_read, encoded_data_length,
-                                            encoded_body_length));
+                                            encoded_body_length,
+                                            // Chronos
+                                            blocked));
+                                            // End chronos
   ++pending_data_count_;
 
   if (!buffer_->CanAllocate()) {

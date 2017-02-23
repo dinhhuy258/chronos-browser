@@ -541,6 +541,10 @@ class ProfileIOData {
   mutable scoped_refptr<MediaDeviceIDSalt> media_device_id_salt_;
 
   // Member variables which are pointed to by the various context objects.
+  // Chronos
+  mutable BooleanPrefMember enable_ad_block_;
+  mutable BooleanPrefMember enable_smart_ad_block_;
+  // End chronos
   mutable BooleanPrefMember enable_referrers_;
   mutable BooleanPrefMember enable_do_not_track_;
   mutable BooleanPrefMember force_google_safesearch_;

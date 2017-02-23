@@ -19,6 +19,9 @@
 #include "chrome/browser/net/safe_search_util.h"
 #include "components/prefs/pref_member.h"
 #include "net/base/network_delegate_impl.h"
+// Chronos
+#include "chronos/browser/net/blockers/blockers_worker.h"
+// End chronos
 
 class ChromeExtensionsNetworkDelegate;
 class PrefService;
@@ -121,10 +124,24 @@ class ChromeNetworkDelegate : public net::NetworkDelegateImpl {
       data_usage::DataUseAggregator* data_use_aggregator,
       bool is_data_usage_off_the_record);
 
+  // Chronos
+  void set_enable_ad_block(BooleanPrefMember* enable_block_ad) {
+    enable_ad_block_ = enable_block_ad;
+  }
+
+  void set_enable_smart_ad_block(BooleanPrefMember* enable_smart_ad_block) {
+    enable_smart_ad_block_ = enable_smart_ad_block;
+  }
+  // End chronos
+
   // Binds the pref members to |pref_service| and moves them to the IO thread.
   // |enable_referrers| cannot be nullptr, the others can.
   // This method should be called on the UI thread.
   static void InitializePrefsOnUIThread(
+      // Chronos
+      BooleanPrefMember* enable_ad_block,
+      BooleanPrefMember* enable_smart_ad_block,
+      // End chronos
       BooleanPrefMember* enable_referrers,
       BooleanPrefMember* enable_do_not_track,
       BooleanPrefMember* force_google_safe_search,
@@ -199,6 +216,10 @@ class ChromeNetworkDelegate : public net::NetworkDelegateImpl {
   scoped_refptr<content_settings::CookieSettings> cookie_settings_;
 
   // Weak, owned by our owner.
+  // Chronos
+  BooleanPrefMember* enable_ad_block_;
+  BooleanPrefMember* enable_smart_ad_block_;
+  // End chronos
   BooleanPrefMember* enable_referrers_;
   BooleanPrefMember* enable_do_not_track_;
   BooleanPrefMember* force_google_safe_search_;
@@ -218,6 +239,10 @@ class ChromeNetworkDelegate : public net::NetworkDelegateImpl {
   data_usage::DataUseAggregator* data_use_aggregator_;
   // Controls whether network usage is reported as being off the record.
   bool is_data_usage_off_the_record_;
+  // Chronos
+  chronos::net::blockers::BlockersWorker blockers_worker_;
+  GURL last_first_party_url_;
+  // End chronos
 
   DISALLOW_COPY_AND_ASSIGN(ChromeNetworkDelegate);
 };

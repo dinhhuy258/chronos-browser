@@ -325,7 +325,10 @@ Resource::Resource(const ResourceRequest& request,
       m_options(options),
       m_responseTimestamp(currentTime()),
       m_cancelTimer(this, &Resource::cancelTimerFired),
-      m_resourceRequest(request) {
+      m_resourceRequest(request),
+      // Chronos
+      m_blocked(false) {
+      // End chronos
   InstanceCounters::incrementCounter(InstanceCounters::ResourceCounter);
 
   // Currently we support the metadata caching only for HTTP family.
@@ -1109,5 +1112,15 @@ bool Resource::isLoadEventBlockingResourceType() const {
   NOTREACHED();
   return false;
 }
+
+// Chronos
+bool Resource::isResourceBlocked() const {
+  return m_blocked;
+}
+
+void Resource::setResourceBlocked(bool blocked) {
+  m_blocked = blocked;
+}
+// End chronos
 
 }  // namespace blink

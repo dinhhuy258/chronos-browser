@@ -172,6 +172,12 @@ Element* HTMLScriptElement::cloneElementWithoutAttributesAndChildren() {
                                false);
 }
 
+// Chronos
+void HTMLScriptElement::setScriptBlocked(bool blocked) {
+  m_blocked = blocked;
+}
+// End chronos
+
 DEFINE_TRACE(HTMLScriptElement) {
   visitor->trace(m_loader);
   HTMLElement::trace(visitor);

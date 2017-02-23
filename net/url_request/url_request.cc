@@ -579,7 +579,10 @@ URLRequest::URLRequest(const GURL& url,
                                           base::Unretained(this))),
       has_notified_completion_(false),
       received_response_content_length_(0),
-      creation_time_(base::TimeTicks::Now()) {
+      creation_time_(base::TimeTicks::Now()),
+      // Chronos
+      blocked_(false) {
+      // End chronos
   // Sanity check out environment.
   DCHECK(base::ThreadTaskRunnerHandle::IsSet());
 
@@ -1219,5 +1222,11 @@ void URLRequest::set_status(URLRequestStatus status) {
          (!status.is_success() && !status.is_io_pending()));
   status_ = status;
 }
+
+// Chronos
+void URLRequest::set_request_blocked(bool blocked) {
+  blocked_ = blocked;
+}
+// End chronos
 
 }  // namespace net

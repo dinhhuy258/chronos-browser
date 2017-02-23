@@ -87,6 +87,10 @@ void Profile::RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
       std::string(),
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
 #endif
+  // Chronos
+  registry->RegisterBooleanPref(prefs::kEnableAdBlock, true);
+  registry->RegisterBooleanPref(prefs::kEnableSmartAdBlock, true);
+  // End chronos
   registry->RegisterBooleanPref(prefs::kSessionExitedCleanly, true);
   registry->RegisterStringPref(prefs::kSessionExitType, std::string());
   registry->RegisterInt64Pref(prefs::kSiteEngagementLastUpdateTime, 0,

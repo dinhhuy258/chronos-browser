@@ -330,6 +330,11 @@ class CORE_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
 
   static const char* resourceTypeToString(Type, const FetchInitiatorInfo&);
 
+  // Chronos
+  bool isResourceBlocked() const;
+  void setResourceBlocked(bool blocked);
+  // End chronos
+
  protected:
   Resource(const ResourceRequest&, Type, const ResourceLoaderOptions&);
 
@@ -473,6 +478,9 @@ class CORE_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   ResourceResponse m_response;
 
   RefPtr<SharedBuffer> m_data;
+  // Chronos
+  bool m_blocked;
+  // End chronos
 };
 
 class ResourceFactory {

@@ -539,8 +539,17 @@ bool ScriptLoader::doExecuteScript(const ScriptSourceCode& sourceCode) {
   IgnoreDestructiveWriteCountIncrementer ignoreDestructiveWriteCountIncrementer(
       m_isExternalScript || isImportedScript ? contextDocument : 0);
 
-  if (isHTMLScriptLoader(m_element) || isSVGScriptLoader(m_element))
+  if (isHTMLScriptLoader(m_element) || isSVGScriptLoader(m_element)) {
+    // Chronos
+    if (isHTMLScriptLoader(m_element) && sourceCode.resource()) {
+      HTMLScriptElement* htmlScriptElement =
+          static_cast<HTMLScriptElement*> (m_element.get());
+      htmlScriptElement->setScriptBlocked(
+          sourceCode.resource()->isResourceBlocked());
+    }
+    // End chronos
     contextDocument->pushCurrentScript(m_element);
+  }
 
   // Create a script from the script element node, using the script
   // block's source and the script block's type.

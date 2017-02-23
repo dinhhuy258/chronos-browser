@@ -360,6 +360,10 @@ IOThread::IOThread(
       ProxyServiceFactory::CreatePrefProxyConfigTrackerOfLocalState(
           local_state));
   ChromeNetworkDelegate::InitializePrefsOnUIThread(
+      // Chronos
+      nullptr,
+      nullptr,
+      // End chronos
       &system_enable_referrers_,
       nullptr,
       nullptr,

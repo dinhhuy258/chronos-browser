@@ -142,11 +142,17 @@ v8::MaybeLocal<v8::Script> compileWithoutOptions(
     V8CompileHistogram::Cacheability cacheability,
     v8::Isolate* isolate,
     v8::Local<v8::String> code,
-    v8::ScriptOrigin origin) {
+    v8::ScriptOrigin origin,
+    // Chronos
+    bool blocked) {
+    // End chronos
   V8CompileHistogram histogramScope(cacheability);
   v8::ScriptCompiler::Source source(code, origin);
   return v8::ScriptCompiler::Compile(isolate->GetCurrentContext(), &source,
-                                     v8::ScriptCompiler::kNoCompileOptions);
+                                     v8::ScriptCompiler::kNoCompileOptions,
+                                     // Chronos
+                                     blocked);
+                                     // End chronos
 }
 
 // Compile a script, and consume a V8 cache that was generated previously.
@@ -156,7 +162,10 @@ static v8::MaybeLocal<v8::Script> compileAndConsumeCache(
     v8::ScriptCompiler::CompileOptions compileOptions,
     v8::Isolate* isolate,
     v8::Local<v8::String> code,
-    v8::ScriptOrigin origin) {
+    v8::ScriptOrigin origin,
+    // Chronos
+    bool blocked) {
+    // End chronos
   V8CompileHistogram histogramScope(V8CompileHistogram::Cacheable);
   const char* data = cachedMetadata->data();
   int length = cachedMetadata->size();
@@ -166,7 +175,10 @@ static v8::MaybeLocal<v8::Script> compileAndConsumeCache(
           v8::ScriptCompiler::CachedData::BufferNotOwned);
   v8::ScriptCompiler::Source source(code, origin, cachedData);
   v8::MaybeLocal<v8::Script> script = v8::ScriptCompiler::Compile(
-      isolate->GetCurrentContext(), &source, compileOptions);
+      isolate->GetCurrentContext(), &source, compileOptions,
+      // Chronos
+      blocked);
+      // End chronos
   if (cachedData->rejected)
     cacheHandler->clearCachedMetadata(CachedMetadataHandler::SendToPlatform);
   return script;
@@ -180,11 +192,17 @@ v8::MaybeLocal<v8::Script> compileAndProduceCache(
     CachedMetadataHandler::CacheType cacheType,
     v8::Isolate* isolate,
     v8::Local<v8::String> code,
-    v8::ScriptOrigin origin) {
+    v8::ScriptOrigin origin,
+    // Chronos
+    bool blocked) {
+    // End chronos
   V8CompileHistogram histogramScope(V8CompileHistogram::Cacheable);
   v8::ScriptCompiler::Source source(code, origin);
   v8::MaybeLocal<v8::Script> script = v8::ScriptCompiler::Compile(
-      isolate->GetCurrentContext(), &source, compileOptions);
+      isolate->GetCurrentContext(), &source, compileOptions,
+      // Chronos
+      blocked);
+      // End chronos
   const v8::ScriptCompiler::CachedData* cachedData = source.GetCachedData();
   if (cachedData) {
     const char* data = reinterpret_cast<const char*>(cachedData->data);
@@ -213,13 +231,19 @@ v8::MaybeLocal<v8::Script> compileAndConsumeOrProduce(
     CachedMetadataHandler::CacheType cacheType,
     v8::Isolate* isolate,
     v8::Local<v8::String> code,
-    v8::ScriptOrigin origin) {
+    v8::ScriptOrigin origin,
+    // Chronos
+    bool blocked) {
+    // End chronos
   RefPtr<CachedMetadata> codeCache(cacheHandler->cachedMetadata(tag));
+  // Chronos
   return codeCache.get()
              ? compileAndConsumeCache(cacheHandler, codeCache, consumeOptions,
-                                      isolate, code, origin)
+                                      isolate, code, origin, blocked)
              : compileAndProduceCache(cacheHandler, tag, produceOptions,
-                                      cacheType, isolate, code, origin);
+                                      cacheType, isolate, code, origin,
+                                      blocked);
+  // End chronos
 }
 
 enum CacheTagKind {
@@ -270,10 +294,16 @@ v8::MaybeLocal<v8::Script> postStreamCompile(
     ScriptStreamer* streamer,
     v8::Isolate* isolate,
     v8::Local<v8::String> code,
-    v8::ScriptOrigin origin) {
+    v8::ScriptOrigin origin,
+    // Chronos
+    bool blocked) {
+    // End chronos
   V8CompileHistogram histogramScope(V8CompileHistogram::Noncacheable);
   v8::MaybeLocal<v8::Script> script = v8::ScriptCompiler::Compile(
-      isolate->GetCurrentContext(), streamer->source(), code, origin);
+      isolate->GetCurrentContext(), streamer->source(), code, origin,
+      // Chronos
+      blocked);
+      // End chronos
 
   if (!cacheHandler)
     return script;
@@ -315,7 +345,10 @@ v8::MaybeLocal<v8::Script> postStreamCompile(
 
 typedef Function<v8::MaybeLocal<v8::Script>(v8::Isolate*,
                                             v8::Local<v8::String>,
-                                            v8::ScriptOrigin)>
+                                            v8::ScriptOrigin,
+                                            // Chronos
+                                            bool)>
+                                            // End chronos
     CompileFn;
 
 // A notation convenience: WTF::bind<...> needs to be given the right argument
@@ -490,8 +523,10 @@ v8::MaybeLocal<v8::Script> V8ScriptRunner::compileScript(
       streamer ? selectCompileFunction(cacheOptions, resource, streamer)
                : selectCompileFunction(cacheOptions, cacheHandler, codeCache,
                                        code, cacheabilityIfNoHandler);
-
-  return (*compileFn)(isolate, code, origin);
+  // Chronos
+  bool blocked = (resource && resource->isResourceBlocked());
+  return (*compileFn)(isolate, code, origin, blocked);
+  // End chronos
 }
 
 v8::MaybeLocal<v8::Value> V8ScriptRunner::runCompiledScript(
@@ -741,7 +776,10 @@ void V8ScriptRunner::throwException(v8::Isolate* isolate,
   v8::Local<v8::Script> script =
       compileWithoutOptions(
           V8CompileHistogram::Cacheability::Noncacheable, isolate,
-          v8AtomicString(isolate, "((e) => { throw e; })"), origin)
+          v8AtomicString(isolate, "((e) => { throw e; })"), origin,
+          // Chronos
+          false)
+          // End chronos
           .ToLocalChecked();
   v8::Local<v8::Function> thrower = runCompiledInternalScript(isolate, script)
                                         .ToLocalChecked()

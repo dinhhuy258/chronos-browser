@@ -337,7 +337,10 @@ void ResourceDispatcher::OnReceivedData(int request_id,
                                         int data_offset,
                                         int data_length,
                                         int encoded_data_length,
-                                        int encoded_body_length) {
+                                        int encoded_body_length,
+                                        // Chronos
+                                        bool blocked) {
+                                        // End chronos
   TRACE_EVENT0("loader", "ResourceDispatcher::OnReceivedData");
   DCHECK_GT(data_length, 0);
   PendingRequestInfo* request_info = GetPendingRequestInfo(request_id);
@@ -364,7 +367,9 @@ void ResourceDispatcher::OnReceivedData(int request_id,
             data_offset, data_length, encoded_data_length, encoded_body_length);
     // |data| takes care of ACKing.
     send_ack = false;
-    request_info->peer->OnReceivedData(std::move(data));
+    // Chronos
+    request_info->peer->OnReceivedData(std::move(data), blocked);
+    // End chronos
   }
 
   // Acknowledge the reception of this data.

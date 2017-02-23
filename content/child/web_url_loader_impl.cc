@@ -384,7 +384,9 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
                           const ResourceResponseInfo& info);
   void OnReceivedResponse(const ResourceResponseInfo& info);
   void OnDownloadedData(int len, int encoded_data_length);
-  void OnReceivedData(std::unique_ptr<ReceivedData> data);
+  // Chronos
+  void OnReceivedData(std::unique_ptr<ReceivedData> data, bool blocked = false);
+  // End chronos
   void OnReceivedCachedMetadata(const char* data, int len);
   void OnCompletedRequest(int error_code,
                           bool was_ignored_by_handler,
@@ -432,7 +434,10 @@ class WebURLLoaderImpl::RequestPeerImpl : public RequestPeer {
                           const ResourceResponseInfo& info) override;
   void OnReceivedResponse(const ResourceResponseInfo& info) override;
   void OnDownloadedData(int len, int encoded_data_length) override;
-  void OnReceivedData(std::unique_ptr<ReceivedData> data) override;
+  // Chronos
+  void OnReceivedData(std::unique_ptr<ReceivedData> data) override {};
+  void OnReceivedData(std::unique_ptr<ReceivedData> data, bool blocked) override;
+  // End chronos
   void OnReceivedCachedMetadata(const char* data, int len) override;
   void OnCompletedRequest(int error_code,
                           bool was_ignored_by_handler,
@@ -797,7 +802,10 @@ void WebURLLoaderImpl::Context::OnDownloadedData(int len,
 }
 
 void WebURLLoaderImpl::Context::OnReceivedData(
-    std::unique_ptr<ReceivedData> data) {
+    std::unique_ptr<ReceivedData> data,
+    // Chronos
+    bool blocked) {
+    // End chronos
   const char* payload = data->payload();
   int data_length = data->length();
   int encoded_data_length = data->encoded_data_length();
@@ -816,7 +824,10 @@ void WebURLLoaderImpl::Context::OnReceivedData(
     // We dispatch the data even when |useStreamOnResponse()| is set, in order
     // to make Devtools work.
     client_->didReceiveData(loader_, payload, data_length, encoded_data_length,
-                            data->encoded_body_length());
+                            data->encoded_body_length(),
+                            // Chronos
+                            blocked);
+                            // End chronos
 
     if (request_.useStreamOnResponse()) {
       // We don't support ftp_listening_delegate_ for now.
@@ -990,10 +1001,12 @@ void WebURLLoaderImpl::RequestPeerImpl::OnDownloadedData(
   context_->OnDownloadedData(len, encoded_data_length);
 }
 
+// Chronos
 void WebURLLoaderImpl::RequestPeerImpl::OnReceivedData(
-    std::unique_ptr<ReceivedData> data) {
-  context_->OnReceivedData(std::move(data));
+    std::unique_ptr<ReceivedData> data, bool blocked) {
+  context_->OnReceivedData(std::move(data), blocked);
 }
+// End chronos
 
 void WebURLLoaderImpl::RequestPeerImpl::OnReceivedCachedMetadata(
     const char* data,

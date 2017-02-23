@@ -2337,4 +2337,12 @@ const char kSearchGeolocationPostDisclosureMetricsRecorded[] =
     "search_geolocation_post_disclosure_metrics_recorded";
 #endif
 
+// Chronos
+// Whether ad block is enabled within the browser.
+const char kEnableAdBlock[] = "enable_ad_block";
+
+// Whether smart ad block is enabled within the browser.
+const char kEnableSmartAdBlock[] = "enable_smart_ad_block";
+// End chronos
+
 }  // namespace prefs

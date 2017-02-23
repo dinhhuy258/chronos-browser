@@ -91,6 +91,10 @@ bool ChromeNetworkDelegate::g_allow_file_access_ = true;
 
 namespace {
 
+// Chronos
+#define kTransparentOnePixelGif "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+// End chronos
+
 const char kDNTHeader[] = "DNT";
 
 // Gets called when the extensions finish work on the URL. If the extensions
@@ -146,6 +150,10 @@ ChromeNetworkDelegate::ChromeNetworkDelegate(
     extensions::EventRouterForwarder* event_router,
     BooleanPrefMember* enable_referrers)
     : profile_(nullptr),
+      // Chronos
+      enable_ad_block_(nullptr),
+      enable_smart_ad_block_(nullptr),
+      // End chronos
       enable_referrers_(enable_referrers),
       enable_do_not_track_(nullptr),
       force_google_safe_search_(nullptr),
@@ -189,6 +197,10 @@ void ChromeNetworkDelegate::set_data_use_aggregator(
 
 // static
 void ChromeNetworkDelegate::InitializePrefsOnUIThread(
+    // Chronos
+    BooleanPrefMember* enable_ad_block,
+    BooleanPrefMember* enable_smart_ad_block,
+    // End chronos
     BooleanPrefMember* enable_referrers,
     BooleanPrefMember* enable_do_not_track,
     BooleanPrefMember* force_google_safe_search,
@@ -219,6 +231,18 @@ void ChromeNetworkDelegate::InitializePrefsOnUIThread(
     allowed_domains_for_apps->MoveToThread(
         BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
   }
+  // Chronos
+  if (enable_ad_block) {
+    enable_ad_block->Init(prefs::kEnableAdBlock, pref_service);
+    enable_ad_block->MoveToThread(
+        BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
+  }
+  if (enable_smart_ad_block) {
+    enable_smart_ad_block->Init(prefs::kEnableSmartAdBlock, pref_service);
+    enable_smart_ad_block->MoveToThread(
+        BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
+  }
+  // End chronos
 }
 
 // static
@@ -252,6 +276,60 @@ int ChromeNetworkDelegate::OnBeforeURLRequest(
                                     &request->url().possibly_invalid_spec()));
     return error;
   }
+
+  // Chronos
+  std::string first_party_host = "";
+  if (request) {
+    first_party_host = request->first_party_for_cookies().host();
+  }
+  if (first_party_host.length() == 0) {
+    first_party_host = last_first_party_url_.host();
+  } else if (request) {
+    last_first_party_url_ = request->first_party_for_cookies();
+  }
+
+  bool first_party_url = request && (request->url() == last_first_party_url_);
+
+  bool is_valid_url = true;
+  if (request) {
+      is_valid_url = request->url().is_valid();
+      std::string scheme = request->url().scheme();
+      if (scheme.length()) {
+          std::transform(scheme.begin(), scheme.end(),
+                         scheme.begin(), ::tolower);
+          if (scheme != "http" && scheme != "https") {
+              is_valid_url = false;
+          }
+      }
+  }
+
+  bool is_adblock_enabled = enable_ad_block_ && enable_ad_block_->GetValue();
+
+  bool should_block_url = false;
+  if (!first_party_url
+      && is_valid_url
+      && is_adblock_enabled
+      && request
+      && info
+      && blockers_worker_.ShouldAdBlockUrl(
+          first_party_host,
+          request->url().spec(),
+          (unsigned int)info->GetResourceType())) {
+    should_block_url = true;
+  }
+
+  request->set_request_blocked(should_block_url);
+
+  if (should_block_url && info &&
+      info->GetResourceType() == content::RESOURCE_TYPE_IMAGE) {
+    *new_url = GURL(kTransparentOnePixelGif);
+  }
+  else if (should_block_url && info &&
+           info->GetResourceType() != content::RESOURCE_TYPE_SCRIPT) {
+    *new_url = GURL("");
+    return error;
+  }
+  // End chronos
 
   // TODO(mmenke): Remove ScopedTracker below once crbug.com/456327 is fixed.
   tracked_objects::ScopedTracker tracking_profile2(
