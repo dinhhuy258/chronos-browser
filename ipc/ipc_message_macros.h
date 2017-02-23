@@ -433,6 +433,10 @@
   IPC_MESSAGE_CONTROL(msg, a, b, c, d)
 #define IPC_MESSAGE_CONTROL5(msg, a, b, c, d, e) \
   IPC_MESSAGE_CONTROL(msg, a, b, c, d, e)
+// Chronos
+#define IPC_MESSAGE_CONTROL6(msg, a, b, c, d, e, f) \
+  IPC_MESSAGE_CONTROL(msg, a, b, c, d, e, f)
+// End chronos
 
 #define IPC_MESSAGE_ROUTED0(msg) IPC_MESSAGE_ROUTED(msg)
 #define IPC_MESSAGE_ROUTED1(msg, a) IPC_MESSAGE_ROUTED(msg, a)
