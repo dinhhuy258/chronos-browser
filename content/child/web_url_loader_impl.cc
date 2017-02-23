@@ -435,7 +435,7 @@ class WebURLLoaderImpl::RequestPeerImpl : public RequestPeer {
   void OnReceivedResponse(const ResourceResponseInfo& info) override;
   void OnDownloadedData(int len, int encoded_data_length) override;
   // Chronos
-  void OnReceivedData(std::unique_ptr<ReceivedData> data) override {};
+  void OnReceivedData(std::unique_ptr<ReceivedData> data) override;
   void OnReceivedData(std::unique_ptr<ReceivedData> data, bool blocked) override;
   // End chronos
   void OnReceivedCachedMetadata(const char* data, int len) override;
@@ -1005,6 +1005,11 @@ void WebURLLoaderImpl::RequestPeerImpl::OnDownloadedData(
 void WebURLLoaderImpl::RequestPeerImpl::OnReceivedData(
     std::unique_ptr<ReceivedData> data, bool blocked) {
   context_->OnReceivedData(std::move(data), blocked);
+}
+
+void WebURLLoaderImpl::RequestPeerImpl::OnReceivedData(
+    std::unique_ptr<ReceivedData> data) {
+  context_->OnReceivedData(std::move(data));
 }
 // End chronos
 

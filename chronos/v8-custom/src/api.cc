@@ -2057,7 +2057,7 @@ MaybeLocal<UnboundScript> ScriptCompiler::CompileUnboundInternal(
         blocked);
         // End chronos
     // Chronos
-    if (result->script()->IsScript()) {
+    if (!result.is_null() && result->script() && result->script()->IsScript()) {
       v8::internal::Script* script = v8::internal::Script::cast(result->script());
       script->set_blocked(blocked);
     }
