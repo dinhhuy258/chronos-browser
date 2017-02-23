@@ -764,6 +764,9 @@ if (is_win) {
       # can't deal with .icns files.
       "app/theme/default_100_percent/$branding_path_component/product_logo_32.png",
       "browser/mac/install.sh",
+      # Chronos
+      "../chronos/resources/abp_filter_parser.dat",
+      # End chronos
     ]
 
     outputs = [
