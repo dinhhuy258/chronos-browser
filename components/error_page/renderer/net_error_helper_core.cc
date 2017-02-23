@@ -699,6 +699,9 @@ void NetErrorHelperCore::GetErrorHTML(FrameType frame_type,
     GetErrorHtmlForMainFrame(pending_error_page_info_.get(), error_html);
   } else {
     // These values do not matter, as error pages in iframes hide the buttons.
+    // This is just a temporary fix. In the future I will find the way to hide
+    // ads iframe
+    return;
     bool reload_button_in_page;
     bool show_saved_copy_button_in_page;
     bool show_cached_copy_button_in_page;
