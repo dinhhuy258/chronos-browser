@@ -201,6 +201,10 @@
 #include "extensions/common/manifest.h"
 #endif
 
+// Chronos
+#include "chronos/browser/ui/webui/adblock_settings/adblock_settings_ui.h"
+// End chronos
+
 using content::WebUI;
 using content::WebUIController;
 using ui::WebDialogUI;
@@ -631,6 +635,12 @@ WebUIFactoryFunction GetWebUIFactoryFunction(WebUI* web_ui,
       url.host_piece() == chrome::kChromeUISiteEngagementHost) {
     return &NewWebUI<SiteEngagementUI>;
   }
+
+  // Chronos
+  if (url.host_piece() == chrome::kChronosUIAdblockSettingsFrameHost) {
+    return &NewWebUI<AdblockSettingsUI>;
+  }
+  // End chronos
 
   return NULL;
 }

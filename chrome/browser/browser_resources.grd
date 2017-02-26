@@ -611,6 +611,11 @@
       <include name="IDR_CHROME_CONTENT_PLUGIN_MANIFEST_OVERLAY" file="chrome_content_plugin_manifest_overlay.json" type="BINDATA" />
       <include name="IDR_CHROME_CONTENT_RENDERER_MANIFEST_OVERLAY" file="chrome_content_renderer_manifest_overlay.json" type="BINDATA" />
       <include name="IDR_CHROME_CONTENT_UTILITY_MANIFEST_OVERLAY" file="chrome_content_utility_manifest_overlay.json" type="BINDATA" />
+
+      <include name="IDR_ADBLOCK_SETTINGS_HTML" file="../../chronos\browser\resources\adblock_settings\adblock_settings.html" type="BINDATA" />
+      <include name="IDR_ADBLOCK_SETTINGS_JS" file="../../chronos\browser\resources\adblock_settings\adblock_settings.js" type="BINDATA" />
+      <include name="IDR_UBER_SHARED_CSS" file="../../chronos\browser\resources\uber\uber_shared.css" type="BINDATA" />
+
     </includes>
   </release>
 </grit>

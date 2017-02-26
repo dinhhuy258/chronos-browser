@@ -610,6 +610,14 @@ extern const char kChooserUsbOverviewURL[];
 extern const char kEolNotificationURL[];
 #endif
 
+// Chronos
+extern const char kChronosUIAdblockSettingsURL[];
+extern const char kChronosUIAdblockSettingsFrameURL[];
+
+extern const char kChronosUIAdblockSettingsHost[];
+extern const char kChronosUIAdblockSettingsFrameHost[];
+// End chronos
+
 }  // namespace chrome
 
 #endif  // CHROME_COMMON_URL_CONSTANTS_H_

@@ -810,4 +810,12 @@ const char kChooserUsbOverviewURL[] =
 const char kEolNotificationURL[] = "https://www.google.com/chromebook/older/";
 #endif
 
+// Chronos
+const char kChronosUIAdblockSettingsURL[] = "chrome://adblock-settings/";
+const char kChronosUIAdblockSettingsFrameURL[] = "chrome://adblock-settings-frame/";
+
+const char kChronosUIAdblockSettingsHost[] = "adblock-settings";
+const char kChronosUIAdblockSettingsFrameHost[] = "adblock-settings-frame";
+// End chronos
+
 }  // namespace chrome

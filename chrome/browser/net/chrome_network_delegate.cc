@@ -278,56 +278,60 @@ int ChromeNetworkDelegate::OnBeforeURLRequest(
   }
 
   // Chronos
-  std::string first_party_host = "";
-  if (request) {
-    first_party_host = request->first_party_for_cookies().host();
-  }
-  if (first_party_host.length() == 0) {
-    first_party_host = last_first_party_url_.host();
-  } else if (request) {
-    last_first_party_url_ = request->first_party_for_cookies();
-  }
-
-  bool first_party_url = request && (request->url() == last_first_party_url_);
-
-  bool is_valid_url = true;
-  if (request) {
-      is_valid_url = request->url().is_valid();
-      std::string scheme = request->url().scheme();
-      if (scheme.length()) {
-          std::transform(scheme.begin(), scheme.end(),
-                         scheme.begin(), ::tolower);
-          if (scheme != "http" && scheme != "https") {
-              is_valid_url = false;
-          }
-      }
-  }
-
   bool is_adblock_enabled = enable_ad_block_ && enable_ad_block_->GetValue();
+  bool is_smart_adblock_enabled = enable_smart_ad_block_ &&
+                                  enable_smart_ad_block_->GetValue();
 
-  bool should_block_url = false;
-  if (!first_party_url
-      && is_valid_url
-      && is_adblock_enabled
-      && request
-      && info
-      && blockers_worker_.ShouldAdBlockUrl(
-          first_party_host,
-          request->url().spec(),
-          (unsigned int)info->GetResourceType())) {
-    should_block_url = true;
-  }
+  if (is_adblock_enabled || is_smart_adblock_enabled) {
+    std::string first_party_host = "";
+    if (request) {
+      first_party_host = request->first_party_for_cookies().host();
+    }
+    if (first_party_host.length() == 0) {
+      first_party_host = last_first_party_url_.host();
+    } else if (request) {
+      last_first_party_url_ = request->first_party_for_cookies();
+    }
 
-  request->set_request_blocked(should_block_url);
+    bool first_party_url = request && (request->url() == last_first_party_url_);
 
-  if (should_block_url && info &&
-      info->GetResourceType() == content::RESOURCE_TYPE_IMAGE) {
-    *new_url = GURL(kTransparentOnePixelGif);
-  }
-  else if (should_block_url && info &&
-           info->GetResourceType() != content::RESOURCE_TYPE_SCRIPT) {
-    *new_url = GURL("");
-    return error;
+    bool is_valid_url = true;
+    if (request) {
+        is_valid_url = request->url().is_valid();
+        std::string scheme = request->url().scheme();
+        if (scheme.length()) {
+            std::transform(scheme.begin(), scheme.end(),
+                           scheme.begin(), ::tolower);
+            if (scheme != "http" && scheme != "https") {
+                is_valid_url = false;
+            }
+        }
+    }
+
+    bool should_block_url = false;
+    if (!first_party_url
+        && is_valid_url
+        && request
+        && info
+        && blockers_worker_.ShouldAdBlockUrl(
+            first_party_host,
+            request->url().spec(),
+            (unsigned int)info->GetResourceType())) {
+      should_block_url = true;
+    }
+
+    request->set_request_blocked(should_block_url);
+
+    if (should_block_url && info &&
+        info->GetResourceType() == content::RESOURCE_TYPE_IMAGE) {
+      *new_url = GURL(kTransparentOnePixelGif);
+    }
+    else if ((should_block_url && is_adblock_enabled) ||
+             (should_block_url && info &&
+              info->GetResourceType() != content::RESOURCE_TYPE_SCRIPT)) {
+      *new_url = GURL("");
+      return error;
+    }
   }
   // End chronos
 

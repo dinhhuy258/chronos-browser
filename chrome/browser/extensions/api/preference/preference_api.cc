@@ -111,6 +111,12 @@ PrefMappingEntry kPrefMapping[] = {
      APIPermission::kProxy},
     {"referrersEnabled", prefs::kEnableReferrers, APIPermission::kPrivacy,
      APIPermission::kPrivacy},
+    // Chronos
+    {"adblockEnabled", prefs::kEnableAdBlock, APIPermission::kPrivacy,
+     APIPermission::kPrivacy},
+    {"smartAdblockEnabled", prefs::kEnableSmartAdBlock, APIPermission::kPrivacy,
+     APIPermission::kPrivacy},
+    // End chronos
     {"safeBrowsingEnabled", prefs::kSafeBrowsingEnabled,
      APIPermission::kPrivacy, APIPermission::kPrivacy},
     {"safeBrowsingExtendedReportingEnabled",

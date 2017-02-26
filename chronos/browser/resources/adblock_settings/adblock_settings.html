@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html i18n-values="dir:textdirection">
+<head>
+  <meta charset="utf-8">
+  <title i18n-content="adblockSettingsTitle"></title>
+  <link rel="stylesheet" href="chrome://resources/css/chrome_shared.css">
+  <link rel="stylesheet" href="uber_shared.css">
+  <script src="chrome://resources/js/cr.js"></script>
+  <script src="chrome://resources/js/load_time_data.js"></script>
+  <script src="chrome://resources/js/util.js"></script>
+  <script src="strings.js"></script>
+  <script src="adblock_settings.js"></script>
+</head>
+<body class="uber-frame">
+  <header>
+    <h1>$i18n{adblockSettingsTitle}</h1>
+  </header>
+  <div id="mainview-content">
+    <div id="page-container">
+      <div class="page">
+        <form>
+          <br>
+          <input id="disable_adblock" type="radio" name="adblock" value="disable_adblock"> Disable adblock<br><br>
+          <input id="enable_adblock" type="radio" name="adblock" value="enable_adblock"> Enable adblock<br><br>
+          <input id="enable_smart_adblock" type="radio" name="adblock" value="enable_smart_adblock"> Enable smart adblock
+        </form>
+      </div>
+    </div>
+  </div>
+ <script src="chrome://resources/js/i18n_template.js"></script>
+</body>
+</html>

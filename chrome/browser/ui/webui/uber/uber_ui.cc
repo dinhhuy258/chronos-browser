@@ -60,6 +60,11 @@ content::WebUIDataSource* CreateUberHTMLSource() {
   source->AddString("historyHost", chrome::kChromeUIHistoryHost);
   source->AddString("settingsFrameURL", chrome::kChromeUISettingsFrameURL);
   source->AddString("settingsHost", chrome::kChromeUISettingsHost);
+  // Chronos
+  source->AddString("adblockSettingsFrameURL",
+                     chrome::kChronosUIAdblockSettingsFrameURL);
+  source->AddString("adblockSettingsHost", chrome::kChronosUIAdblockSettingsHost);
+  // End chronos
 
   return source;
 }
@@ -111,6 +116,12 @@ content::WebUIDataSource* CreateUberFrameHTMLSource(
   source->AddLocalizedString("historyDisplayName", IDS_HISTORY_TITLE);
   source->AddString("settingsHost", chrome::kChromeUISettingsHost);
   source->AddLocalizedString("settingsDisplayName", IDS_SETTINGS_TITLE);
+  // Chronos
+  source->AddString("adblockSettingsHost",
+                     chrome::kChronosUIAdblockSettingsHost);
+  source->AddLocalizedString("adblockSettingsDisplayName",
+                              IDS_ADBLOCK_SETTINGS_TITLE);
+  // End chronos
   bool overrides_history =
       HasExtensionType(browser_context, chrome::kChromeUIHistoryHost);
   source->AddString("overridesHistory", overrides_history ? "yes" : "no");
@@ -152,7 +163,10 @@ void SubframeLogger::DidCommitProvisionalLoadForFrame(
       url == chrome::kChromeUIHelpFrameURL ||
       url == chrome::kChromeUIHistoryFrameURL ||
       url == chrome::kChromeUISettingsFrameURL ||
-      url == chrome::kChromeUIUberFrameURL) {
+      url == chrome::kChromeUIUberFrameURL ||
+      // Chronos
+      url == chrome::kChronosUIAdblockSettingsFrameURL) {
+      // End chronos
     webui::LogWebUIUrl(url);
   }
 }
@@ -176,6 +190,10 @@ UberUI::UberUI(content::WebUI* web_ui) : WebUIController(web_ui) {
                   chrome::kChromeUIHistoryHost);
   RegisterSubpage(chrome::kChromeUISettingsFrameURL,
                   chrome::kChromeUISettingsHost);
+  // Chronos
+  RegisterSubpage(chrome::kChronosUIAdblockSettingsFrameURL,
+                  chrome::kChronosUIAdblockSettingsHost);
+  // End chronos
   RegisterSubpage(chrome::kChromeUIUberFrameURL,
                   chrome::kChromeUIUberHost);
 }
