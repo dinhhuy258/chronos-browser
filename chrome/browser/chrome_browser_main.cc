@@ -1716,6 +1716,12 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
     } else {
       browser_creator_->set_is_default_browser_dialog_suppressed(true);
     }
+    // Chronos
+    // Disable adblock in the first time run browser
+    // User can turn it on in adblock settings
+    profile_->GetPrefs()->SetBoolean(prefs::kEnableAdBlock, false);
+    profile_->GetPrefs()->SetBoolean(prefs::kEnableSmartAdBlock, false);
+    // End chronos
   }
 #endif  // !defined(OS_ANDROID) && !defined(OS_CHROMEOS)
 
