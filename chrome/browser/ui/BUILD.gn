@@ -430,6 +430,10 @@ split_static_library("ui") {
     "zoom/chrome_zoom_level_otr_delegate.h",
     "zoom/chrome_zoom_level_prefs.cc",
     "zoom/chrome_zoom_level_prefs.h",
+    # Chronos
+    "../../../chronos/browser/ui/webui/adblock_settings/adblock_settings_ui.cc",
+    "../../../chronos/browser/ui/webui/adblock_settings/adblock_settings_ui.h",
+    # End chronos
   ]
 
   defines = []
