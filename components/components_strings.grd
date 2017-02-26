@@ -214,6 +214,9 @@
       <part file="undo_strings.grdp" />
       <part file="version_ui_strings.grdp" />
       <part file="web_contents_delegate_android_strings.grdp" />
+      <!-- Chronos -->
+      <part file="components_chronos_strings.grdp" />
+      <!-- End chronos -->
 
       <!-- Generic terms -->
       <message name="IDS_CANCEL" desc="Used for Cancel on buttons">
