@@ -6,6 +6,8 @@
 #ifndef HASHFN_H_
 #define HASHFN_H_
 
+#include <stdint.h>
+
 typedef uint64_t uint64Array[30];
 static int precomputedArraySize = sizeof(uint64Array) / sizeof(uint64_t);
 
