@@ -241,6 +241,10 @@
 #include "content/browser/hyphenation/hyphenation_impl.h"
 #endif
 
+// Chronos
+#include "chronos/content/browser/get_config_msg_helper.h"
+// End chronos
+
 #if defined(OS_WIN)
 #define IntToStringType base::IntToString16
 #else
@@ -1180,6 +1184,9 @@ void RenderProcessHostImpl::CreateMessageFilters() {
       new SynchronousCompositorBrowserFilter(GetID());
   AddFilter(synchronous_compositor_filter_.get());
 #endif
+  // Chronos
+  AddFilter(new chronos::content::GetConfigMsgHelper());
+  // End  chronos
 }
 
 void RenderProcessHostImpl::RegisterMojoInterfaces() {

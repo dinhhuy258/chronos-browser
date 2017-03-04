@@ -917,6 +917,11 @@ IPC_MESSAGE_ROUTED2(ViewHostMsg_ShowUnhandledTapUIIfNeeded,
 IPC_MESSAGE_ROUTED1(ViewMsg_GetRenderedTextCompleted, std::string)
 #endif
 
+// Chronos
+IPC_SYNC_MESSAGE_CONTROL0_1(ViewHostMsg_GetPopupBlockerSetting,
+                            int /* result */)
+// End chronos
+
 // Adding a new message? Stick to the sort order above: first platform
 // independent ViewMsg, then ifdefs for platform specific ViewMsg, then platform
 // independent ViewHostMsg, then ifdefs for platform specific ViewHostMsg.
