@@ -89,6 +89,9 @@ ResourceRequest::ResourceRequest(CrossThreadResourceRequestData* data)
   m_isExternalRequest = data->m_isExternalRequest;
   m_inputPerfMetricReportPolicy = data->m_inputPerfMetricReportPolicy;
   m_redirectStatus = data->m_redirectStatus;
+  // Chronos
+  m_scriptContext = false;
+  // End chronos
 }
 
 ResourceRequest::ResourceRequest(const ResourceRequest&) = default;
@@ -387,6 +390,9 @@ void ResourceRequest::initialize(const KURL& url) {
   m_reportRawHeaders = false;
   m_hasUserGesture = false;
   m_downloadToFile = false;
+  // Chronos
+  m_scriptContext = false;
+  // End chronos
   m_useStreamOnResponse = false;
   m_skipServiceWorker = WebURLRequest::SkipServiceWorker::None;
   m_shouldResetAppCache = false;

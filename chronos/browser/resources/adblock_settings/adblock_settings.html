@@ -18,12 +18,84 @@
   <div id="mainview-content">
     <div id="page-container">
       <div class="page">
+        <section>
+          <h3>Adblock</h3>
+          <form>
+            <div class="radio controlled-setting-with-label">
+              <label>
+                <input id="disable_adblock" type="radio" name="adblock">
+                </input>
+                <span>Disable adblock</span>
+              </label>
+            </div>
+            <div class="radio controlled-setting-with-label">
+              <label>
+                <input id="enable_adblock" type="radio" name="adblock">
+                </input>
+                <span>Enable adblock</span>
+              </label>
+            </div>
+            <div class="radio controlled-setting-with-label">
+              <label>
+                  <input id="enable_smart_adblock" type="radio" name="adblock">
+                  </input>
+                  <span>Enable smart adblock</span>
+              </label>
+            </div>
+          </form>
+        </section>
+
+        <section>
+          <h3>Popup blocker</h3>
+          <form>
+            <div class="radio controlled-setting-with-label">
+              <label>
+                <input id="disable_popup_blocker" type="radio" name="popup">
+                </input>
+                <span>Disable popup blocker</span>
+              </label>
+            </div>
+            <div class="radio controlled-setting-with-label">
+              <label>
+                <input id="block_window_popup" type="radio" name="popup">
+                </input>
+                <span>Block popup window (except tab)</span>
+              </label>
+            </div>
+            <div class="radio controlled-setting-with-label">
+              <label>
+                  <input id="block_all_popup" type="radio" name="popup">
+                  </input>
+                  <span>Block popup window and tab</span>
+              </label>
+            </div>
+          </form>
+          <div class="settings-row">
+            <p>
+              Popup blocker may cause some unexpected problems. For example: When you access to website link with google account. If you enable the popup blocker then the google sign in popup will not displayed. You should disable popup blocker feature to open the google sign in opup
+            </p>
+            <div class="checkbox controlled-setting-with-label">
+            <label>
+              <input id="disable_popup_blocker_before_quit" type="checkbox">
+              <span>
+                Disable popup blocker before quit
+              </span>
+            </label>
+          </div>
+          </div>
+
+        </section>
+
+
+        <!-- <br>
+        <br>
+        <p2>Popup blocker</p2>
         <form>
           <br>
-          <input id="disable_adblock" type="radio" name="adblock" value="disable_adblock"> Disable adblock<br><br>
-          <input id="enable_adblock" type="radio" name="adblock" value="enable_adblock"> Enable adblock<br><br>
-          <input id="enable_smart_adblock" type="radio" name="adblock" value="enable_smart_adblock"> Enable smart adblock
-        </form>
+            <input id="disable_popup_blocker" type="radio" name="popup" value="disable_popup_blocker"> Disable popup blocker<br><br>
+            <input id="block_window_popup" type="radio" name="popup" value="enable_block_window_popup"> Block all windown popup (except tab)<br><br>
+            <input id="block_all_popup" type="radio" name="popup" value="enable_block_all_popup"> Block all popup (tab + window)
+        </form> -->
       </div>
     </div>
   </div>

@@ -197,6 +197,10 @@
 #include "content/renderer/media/webrtc/peer_connection_dependency_factory.h"
 #endif
 
+// Chronos
+#include "chronos/constants/chronos_constants.h"
+// End chronos
+
 using blink::WebAXObject;
 using blink::WebApplicationCacheHost;
 using blink::WebApplicationCacheHostClient;
@@ -1368,6 +1372,21 @@ WebView* RenderViewImpl::createView(WebLocalFrame* creator,
                                     const WebString& frame_name,
                                     WebNavigationPolicy policy,
                                     bool suppress_opener) {
+  // Chronos
+  if (request.isScriptContext()){
+    int popupBlockerSetting;
+    Send(new ViewHostMsg_GetPopupBlockerSetting(&popupBlockerSetting));
+    switch(popupBlockerSetting) {
+      case chronos::constants::BLOCK_WINDOW_POPUP:
+        if (features.heightSet || features.widthSet) {
+          return nullptr;
+        }
+        break;
+      case chronos::constants::BLOCK_ALL_POPUP:
+        return nullptr;
+    }
+  }
+  // End chronos
   mojom::CreateNewWindowParamsPtr params = mojom::CreateNewWindowParams::New();
   params->opener_id = GetRoutingID();
   params->user_gesture = WebUserGestureIndicator::isProcessingUserGesture();

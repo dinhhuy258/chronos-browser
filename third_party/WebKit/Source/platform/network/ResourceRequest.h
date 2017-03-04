@@ -210,6 +210,14 @@ class PLATFORM_EXPORT ResourceRequest final {
     m_downloadToFile = downloadToFile;
   }
 
+  // Chronos
+  // True if the request is created in script (DOMLocalWindow)
+  bool scriptContext() const { return m_scriptContext; }
+  void setScriptContext(bool scriptContext) {
+    m_scriptContext = scriptContext;
+  }
+  // End chronos
+
   // True if the requestor wants to receive a response body as
   // WebDataConsumerHandle.
   bool useStreamOnResponse() const { return m_useStreamOnResponse; }
@@ -334,6 +342,9 @@ class PLATFORM_EXPORT ResourceRequest final {
   bool m_downloadToFile : 1;
   bool m_useStreamOnResponse : 1;
   bool m_shouldResetAppCache : 1;
+  // Chronos
+  bool m_scriptContext : 1;
+  // End chronos
   WebURLRequest::SkipServiceWorker m_skipServiceWorker;
   ResourceLoadPriority m_priority;
   int m_intraPriorityValue;

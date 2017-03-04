@@ -229,6 +229,10 @@ class WebURLRequest {
   BLINK_PLATFORM_EXPORT RequestContext getRequestContext() const;
   BLINK_PLATFORM_EXPORT void setRequestContext(RequestContext);
 
+  // Chronos
+  BLINK_PLATFORM_EXPORT bool isScriptContext() const;
+  // End chronos
+
   BLINK_PLATFORM_EXPORT FrameType getFrameType() const;
   BLINK_PLATFORM_EXPORT void setFrameType(FrameType);
 

@@ -426,6 +426,12 @@ const ResourceRequest& WebURLRequest::toResourceRequest() const {
   return *m_resourceRequest;
 }
 
+// Chronos
+bool WebURLRequest::isScriptContext() const {
+  return m_resourceRequest->scriptContext();
+}
+// End chronos
+
 WebURLRequest::WebURLRequest(ResourceRequest& r) : m_resourceRequest(&r) {}
 
 }  // namespace blink

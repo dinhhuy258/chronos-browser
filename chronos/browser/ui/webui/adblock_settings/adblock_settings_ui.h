@@ -1,6 +1,7 @@
 #ifndef CHRONOS_BROWSER_UI_WEBUI_ADBLOCK_SETTINGS_ADBLOCK_SETTINGS_UI_H_
 #define CHRONOS_BROWSER_UI_WEBUI_ADBLOCK_SETTINGS_ADBLOCK_SETTINGS_UI_H_
 
+#include "base/files/file_path.h"
 #include "base/macros.h"
 #include "content/public/browser/web_ui_controller.h"
 
@@ -20,7 +21,11 @@ class AdblockSettingsUI : public content::WebUIController {
  private:
   // Setting adblock (enable or disable)
   void SettingAdblock(const base::ListValue* args);
-  content::WebUIDataSource* source;
+  // Setting popup blocker
+  void SettingPopupBlocker(const base::ListValue* args);
+
+  base::FilePath popup_blocker_setting_file_path_;
+  content::WebUIDataSource* source_;
   DISALLOW_COPY_AND_ASSIGN(AdblockSettingsUI);
 };
 

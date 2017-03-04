@@ -203,7 +203,9 @@ DOMWindow* createWindow(const String& urlString,
       WebURLRequest::FrameTypeAuxiliary);
   frameRequest.resourceRequest().setRequestorOrigin(
       SecurityOrigin::create(activeFrame->document()->url()));
-
+  // Chronos
+  frameRequest.resourceRequest().setScriptContext(true);
+  // End chronos
   // Normally, FrameLoader would take care of setting the referrer for a
   // navigation that is triggered from javascript. However, creating a window
   // goes through sufficient processing that it eventually enters FrameLoader as
