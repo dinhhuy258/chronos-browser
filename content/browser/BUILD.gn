@@ -1171,6 +1171,8 @@ source_set("browser") {
     "renderer_host/ui_events_helper.h",
     "renderer_host/webmenurunner_mac.h",
     "renderer_host/webmenurunner_mac.mm",
+    "../../chronos/content/browser/get_config_msg_helper.cc",
+    "../../chronos/content/browser/get_config_msg_helper.h",
     "resolve_proxy_msg_helper.cc",
     "resolve_proxy_msg_helper.h",
     "resource_context_impl.cc",
