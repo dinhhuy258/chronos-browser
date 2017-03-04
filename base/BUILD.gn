@@ -136,6 +136,8 @@ component("base") {
   }
 
   sources = [
+    "../chronos/constants/chronos_constants.cc",
+    "../chronos/constants/chronos_constants.h",
     "allocator/allocator_check.cc",
     "allocator/allocator_check.h",
     "allocator/allocator_extension.cc",

@@ -366,6 +366,7 @@ def write_gn_ninja(path, root_gen_dir, options):
       'base/third_party/superfasthash/superfasthash.c',
   ])
   static_libraries['base']['sources'].extend([
+      'chronos/constants/chronos_constants.cc',
       'base/allocator/allocator_check.cc',
       'base/allocator/allocator_extension.cc',
       'base/at_exit.cc',
